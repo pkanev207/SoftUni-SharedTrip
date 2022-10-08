@@ -7,7 +7,6 @@ router.get('/register', isGuest(), (req, res) => {
     res.render('register', { title: 'Register Page' });
 });
 
-// TODO check form action, method, names - identifiers
 router.post('/register', isGuest(), async (req, res) => {
     // console.log('from controllers >>> ', req.body);
     try {
@@ -25,7 +24,8 @@ router.post('/register', isGuest(), async (req, res) => {
     } catch (err) {
         console.error(err);
         const errors = mapErrors(err);
-        res.render('register', { data: { email: req.body.email, gender: req.body.gender }, errors });
+        const isMale = req.body.gender == 'male';
+        res.render('register', { data: { email: req.body.email, isMale }, errors });
     }
 });
 

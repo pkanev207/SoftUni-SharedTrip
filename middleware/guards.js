@@ -20,9 +20,8 @@ function isGuest() {
 
 function isOwner() {
     return function (req, res, next) {
-        // TODO change property name to match collection
         const userId = req.session.user?._id;
-        if (res.locals.data.owner == userId) {
+        if (res.locals.trip.owner._id == userId) {
             next();
         } else {
             res.redirect('/login');

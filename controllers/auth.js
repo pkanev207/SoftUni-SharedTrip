@@ -1,4 +1,4 @@
-const router = require('express').Router(); // We are using it only once
+const router = require('express').Router();
 const { isUser, isGuest } = require('../middleware/guards');
 const { register, login } = require('../services/user');
 const { mapErrors } = require('../util/mappers');
@@ -8,7 +8,6 @@ router.get('/register', isGuest(), (req, res) => {
 });
 
 router.post('/register', isGuest(), async (req, res) => {
-    // console.log('from controllers >>> ', req.body);
     try {
         if (req.body.password.trim() == '') {
             throw new Error('Password is required!');
@@ -33,7 +32,6 @@ router.get('/login', isGuest(), (req, res) => {
     res.render('login', { title: 'Login Page' });
 });
 
-// TODO check form action, method, names - identifiers
 router.post('/login', isGuest(), async (req, res) => {
     try {
         const user = await login(req.body.email, req.body.password);

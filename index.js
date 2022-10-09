@@ -8,6 +8,7 @@ const databaseConfig = require('./config/database');
 
 const authController = require('./controllers/auth');
 const homeController = require('./controllers/home');
+const tripController = require('./controllers/trip');
 
 
 start();
@@ -31,6 +32,11 @@ async function start() {
 
     app.use(authController);
     app.use(homeController);
+    app.use(tripController);
+
+    app.get('*', (req, res) => {
+        res.render('404', { title: 'Page Not Found' });
+    });
 
     app.listen(3000, () => console.log('Server is running on port 3000'));
 }

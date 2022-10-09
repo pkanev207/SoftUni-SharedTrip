@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
-// We should load all models here to create db
 require('../models/User');
+require('../models/Trip');
 
 const dbName = 'sharedTrip';
 const connString = `mongodb://127.0.0.1:27017/${dbName}`;

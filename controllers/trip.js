@@ -1,7 +1,7 @@
 const router = require('express').Router();
 const { isUser, isOwner } = require('../middleware/guards');
 const preload = require('../middleware/preload');
-const { createTrip, updateTrip, deleteById } = require('../services/trip');
+const { createTrip, updateTrip, deleteById, joinTrip } = require('../services/trip');
 const { mapErrors } = require('../util/mappers');
 
 
@@ -76,6 +76,18 @@ router.post('/edit/:id', preload(), isOwner(), async (req, res) => {
 router.get('/delete/:id', preload(), isOwner(), async (req, res) => {
     await deleteById(req.params.id);
     res.redirect('/trips');
+});
+
+router.get('/join/:id', isUser(), async (req, res) => {
+    const id = req.params.id;
+
+    try {
+        await joinTrip(id, req.session.user._id);
+    } catch (err) {
+        console.error(err);
+    } finally {
+        res.redirect('/trips/' + id);
+    }
 });
 
 module.exports = router;

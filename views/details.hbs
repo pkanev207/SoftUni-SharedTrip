@@ -16,10 +16,13 @@
                 <i class="fas fa-users buddies"></i>
                 <h5>Shared trip Buddies</h5>
                 <div>
-                    <!-- if there are joined buddies for the current trip separate them with comma and space", " -->
-                    <p>peter@abv.bg, marry@abv.bg</p>
-                    <!-- If not display: -->
-                    <p>there are no buddies yet...</p>
+                    <p>
+                        {{#if buddiesList}}
+                            {{buddiesList}}
+                        {{else}}
+                            there are no buddies yet...
+                        {{/if}}
+                    </p>
                 </div>
                 <h5>Driver: <span>{{owner.email}}</span> </h5>
             </div>
@@ -33,7 +36,6 @@
                     <h5>Information about the trip</h5>
                     <textarea class="lead" disabled>{{description}}</textarea>
                     <h5>Price: <span class="lead">{{price}}</span> BGN</h5>
-
                     <!-- if there are no logged in user do not show div with class actions  -->
                     {{#if hasUser}}
                         <div class="actions">

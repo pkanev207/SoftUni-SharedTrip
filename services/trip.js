@@ -1,7 +1,12 @@
 const Trip = require('../models/Trip');
+const User = require('../models/User'); // for two way binding
 
 async function getAllTrips() {
     return Trip.find({}).lean();
+}
+
+async function getTripsByUser(userId) {
+    return Trip.find({ owner: userId }).lean();
 }
 
 async function getTripById(id) {
@@ -15,6 +20,11 @@ async function getTripAndUsers(id) {
 async function createTrip(trip) {
     const result = new Trip(trip);
     await result.save();
+    // after creation in order to have id
+    const user = await User.findById(result.owner);
+    user.trips.push(result._id);
+    await user.save();
+
     return result;
 }
 
@@ -51,6 +61,7 @@ async function joinTrip(tripId, userId) {
 
 module.exports = {
     getAllTrips,
+    getTripsByUser,
     getTripById,
     getTripAndUsers,
     createTrip,
